@@ -3,4 +3,5 @@ services:
     image: postgres
 
 volumes:
-    catalogdbdata:
+    postgres_catalog:
+    
