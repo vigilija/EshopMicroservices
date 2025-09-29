@@ -20,6 +20,4 @@ public class GetProductsEndpoint : ICarterModule
         .WithSummary("Get all products")
         .WithDescription("Retrieves a list of all products.");
     }
-{
-
 }
