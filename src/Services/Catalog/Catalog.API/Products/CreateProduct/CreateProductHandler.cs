@@ -6,18 +6,19 @@ namespace Catalog.API.Products.CreateProduct
 
     public record CreateProductResult(Guid Id);
 
-    internal class CreateProductCommandHandler(IDocumentSession session, IValidator<CreateProductCommand> validator)
+    internal class CreateProductCommandHandler(IDocumentSession session, ILogger<CreateProductCommandHandler> logger)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var validationResult = await validator.ValidateAsync(command, cancellationToken);
-            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
-            if (errors.Any())
-            {
-                throw new ValidationException(errors.FirstOrDefault());
-            }
+            //var validationResult = await validator.ValidateAsync(command, cancellationToken);
+            //var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            //if (errors.Any())
+            //{
+            //    throw new ValidationException(errors.FirstOrDefault());
+            //}
 
+            logger.LogInformation("Handling CreateProductCommand {@Command}", command);
             var prodduct = new Product
             {
                 Id = Guid.NewGuid(),

@@ -3,18 +3,22 @@ using BuildingBlocks.Behaviors;
 var builder = WebApplication.CreateBuilder(args);
 
 // add services to the container
-builder.Services.AddCarter();
+
+var assembly = typeof(Program).Assembly;
+
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    cfg.RegisterServicesFromAssembly(assembly);
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
+
+builder.Services.AddValidatorsFromAssembly(assembly);
+builder.Services.AddCarter();
+
 builder.Services.AddMarten(options =>
 {
     options.Connection(builder.Configuration.GetConnectionString("Database"));
 }).UseLightweightSessions();
-
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
 
