@@ -1,9 +1,11 @@
-﻿namespace Catalog.API.Exceptions
+﻿using BuildingBlocks.Exceptions;
+
+namespace Catalog.API.Exceptions
 {
     [Serializable]
-    internal class ProductNotFoundException : Exception
+    internal class ProductNotFoundException : NotFoundException
     {
-        public ProductNotFoundException(string v) : base("Product not found")
+        public ProductNotFoundException(Guid Id) : base("Product", Id)
         {
         }
     }
